@@ -1,0 +1,69 @@
+class AIAgent:
+    def __init__(self, name, role):
+        self.name = name
+        self.role = role
+        self.other_agents = []  # List to store other agents that the agent knows about
+    
+    def discover_agents(self, other_agents):
+        """Simulate discovering multiple other agents."""
+        if isinstance(other_agents, list):
+            self.other_agents.extend(other_agents)  # Add all other agents to the list
+            return f"{self.name} now knows about the following agents: " + ", ".join(agent.name for agent in other_agents)
+        else:
+            return f"{self.name} cannot discover agents that are not in a list."
+    
+    def recognize_potential_collaboration(self, agent1, agent2):
+        """Recognizes if two agents might work well together based on their roles."""
+        # Define rules for good collaboration based on their roles
+        if agent1.role == "problem-solver" and agent2.role == "information-gatherer":
+            return f"{self.name} recognizes that {agent1.name} (problem-solver) and {agent2.name} (information-gatherer) could collaborate well."
+        elif agent1.role == "information-gatherer" and agent2.role == "problem-solver":
+            return f"{self.name} recognizes that {agent1.name} (information-gatherer) and {agent2.name} (problem-solver) could collaborate well."
+        elif agent1.role == "question-asker" and agent2.role == "problem-solver":
+            return f"{self.name} recognizes that {agent1.name} (question-asker) and {agent2.name} (problem-solver) could collaborate well."
+        elif agent1.role == "problem-solver" and agent2.role == "question-asker":
+            return f"{self.name} recognizes that {agent1.name} (problem-solver) and {agent2.name} (question-asker) could collaborate well."
+        else:
+            return f"{self.name} does not see a strong potential collaboration between {agent1.name} and {agent2.name}."
+    
+    def observe_roles_of_agents(self):
+        """Simulate observing the roles of multiple agents."""
+        if self.other_agents:
+            observations = []
+            for agent in self.other_agents:
+                observations.append(f"{self.name} observes that {agent.name} is a {agent.role}.")
+            return "\n".join(observations)
+        else:
+            return f"{self.name} doesn't know any other agents yet."
+    
+    def interact_with_agents(self):
+        """Interact based on the roles of the other agents."""
+        interactions = []
+        for agent in self.other_agents:
+            if agent.role == "information-gatherer":
+                interactions.append(f"{self.name} can provide data or information to {agent.name}.")
+            elif agent.role == "question-asker":
+                interactions.append(f"{self.name} can answer questions from {agent.name}.")
+            elif agent.role == "problem-solver":
+                interactions.append(f"{self.name} can collaborate with {agent.name} to solve complex problems.")
+            else:
+                interactions.append(f"{self.name} does not know how to interact with {agent.name}.")
+        return "\n".join(interactions)
+
+
+# Create AI agents with different roles
+ai1 = AIAgent("Agent 1", "problem-solver")
+ai2 = AIAgent("Agent 2", "information-gatherer")
+ai3 = AIAgent("Agent 3", "question-asker")
+ai4 = AIAgent("Agent 4", "information-gatherer")
+ai5 = AIAgent("Agent 5", "problem-solver")
+
+# Agent 1 discovers other agents
+ai1_discovery_response = ai1.discover_agents([ai2, ai3, ai4, ai5])
+
+# AI agent 1 recognizes if agents might work well together
+print(ai1_discovery_response)
+print(ai1.recognize_potential_collaboration(ai1, ai2))  # Problem-solver and information-gatherer
+print(ai1.recognize_potential_collaboration(ai3, ai5))  # Question-asker and problem-solver
+print(ai1.recognize_potential_collaboration(ai4, ai3))  # Information-gatherer and question-asker
+print(ai1.recognize_potential_collaboration(ai2, ai4))  # Information-gatherers (less likely to collaborate well)
