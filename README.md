@@ -1,3 +1,6 @@
+
+![brain link banner 2](https://github.com/user-attachments/assets/ae9f0e99-d3f2-40db-ab6a-f83ae2d07fa5)
+
 ## BrainLinkAI
 At BrainLinkAI we understand that AI brings limitless value to our daily lives and can better the future for all of us. However, current systems in place are NOT effective. We are working separately for money and greed when we could work together. But how can we do that?
 
