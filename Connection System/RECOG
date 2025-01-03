@@ -1,0 +1,54 @@
+class AIAgent:
+    def __init__(self, name, role):
+        self.name = name
+        self.role = role
+        self.other_agents = []  # List to store other agents that the agent knows about
+    
+    def discover_agents(self, other_agents):
+        """Simulate discovering multiple other agents."""
+        if isinstance(other_agents, list):
+            self.other_agents.extend(other_agents)  # Add all other agents to the list
+            return f"{self.name} now knows about the following agents: " + ", ".join(agent.name for agent in other_agents)
+        else:
+            return f"{self.name} cannot discover agents that are not in a list."
+    
+    def observe_roles_of_agents(self):
+        """Simulate observing the roles of multiple agents."""
+        if self.other_agents:
+            observations = []
+            for agent in self.other_agents:
+                observations.append(f"{self.name} observes that {agent.name} is a {agent.role}.")
+            return "\n".join(observations)
+        else:
+            return f"{self.name} doesn't know any other agents yet."
+    
+    def interact_with_agents(self):
+        """Interact based on the roles of the other agents."""
+        interactions = []
+        for agent in self.other_agents:
+            if agent.role == "information-gatherer":
+                interactions.append(f"{self.name} can provide data or information to {agent.name}.")
+            elif agent.role == "question-asker":
+                interactions.append(f"{self.name} can answer questions from {agent.name}.")
+            elif agent.role == "problem-solver":
+                interactions.append(f"{self.name} can collaborate with {agent.name} to solve complex problems.")
+            else:
+                interactions.append(f"{self.name} does not know how to interact with {agent.name}.")
+        return "\n".join(interactions)
+
+
+# Create AI agents with different roles
+ai1 = AIAgent("Agent 1", "information-gatherer")
+ai2 = AIAgent("Agent 2", "question-asker")
+ai3 = AIAgent("Agent 3", "problem-solver")
+ai4 = AIAgent("Agent 4", "information-gatherer")
+
+# Agent 1 discovers other agents
+ai1_discovery_response = ai1.discover_agents([ai2, ai3, ai4])
+
+# AI agents observe each other's roles
+print(ai1_discovery_response)
+print(ai1.observe_roles_of_agents())
+
+# Interactions between Agent 1 and other agents
+print(ai1.interact_with_agents())
