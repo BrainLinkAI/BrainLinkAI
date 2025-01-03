@@ -1,0 +1,57 @@
+import random
+
+class AIAgent:
+    def __init__(self, name):
+        self.name = name
+        self.distress_keywords = ["hurt", "suicide", "self-harm", "pain", "worthless", "hopeless", "end it", "help"]
+
+    def recognize_distress(self, user_input):
+        """Detect distress by checking for keywords in the user's message."""
+        for keyword in self.distress_keywords:
+            if keyword.lower() in user_input.lower():
+                return True
+        return False
+
+    def offer_help(self):
+        """Offer help and resources if distress is detected."""
+        help_responses = [
+            "I'm really sorry you're feeling this way. Please reach out to someone you trust, or consider speaking to a professional.",
+            "It’s important to talk to someone when you're feeling like this. You don't have to go through this alone.",
+            "I care about you, and there are people who can help. Please reach out to a support hotline or a therapist.",
+            "I'm really sorry you're feeling like this, but I cannot help in the way you need. Here are some resources that can offer support."
+        ]
+        return random.choice(help_responses)
+
+    def suggest_resources(self):
+        """Provide resources for professional help."""
+        resources = [
+            "National Suicide Prevention Lifeline (USA): Call 1-800-273-8255 or text HOME to 741741 for crisis text support.",
+            "Samaritans (UK & Ireland): Call 116 123 for free 24/7 support.",
+            "Lifeline (Australia): Call 13 11 14 or text 0477 13 11 14.",
+            "Visit the [Crisis Text Line](https://www.crisistextline.org) for 24/7 support."
+        ]
+        return random.choice(resources)
+
+    def interact(self, user_input):
+        """Interact with the user, detect distress, and offer help."""
+        print(f"{self.name}: {user_input}")
+        
+        if self.recognize_distress(user_input):
+            print(f"{self.name}: I'm here for you. It sounds like you're going through a really tough time.")
+            print(f"{self.name}: {self.offer_help()}")
+            print(f"{self.name}: Here are some resources that can help: {self.suggest_resources()}")
+        else:
+            print(f"{self.name}: It sounds like you're doing okay. But remember, if you ever need help, I'm here.")
+
+
+# Example of the AI agent interacting with a user
+ai = AIAgent("SupportBot")
+
+# User inputs suggesting distress
+user_input1 = "I feel so worthless, I don't know how much longer I can go on."
+ai.interact(user_input1)
+
+# User inputs without distress
+user_input2 = "I'm feeling a little tired but okay."
+ai.interact(user_input2)
+
