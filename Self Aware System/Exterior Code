@@ -1,0 +1,36 @@
+class AIAgent:
+    def __init__(self, name):
+        self.name = name
+        self.knows_other_agents = False  # Initially unaware of other agents
+
+    def discover_agents(self, other_agents):
+        """Simulates the agent learning about other agents."""
+        if isinstance(other_agents, list):
+            self.other_agents = other_agents
+            self.knows_other_agents = True
+            return f"{self.name} now knows about the following agents: " + ", ".join(agent.name for agent in other_agents)
+        else:
+            return f"{self.name} cannot discover agents that are not in a list."
+
+    def respond_to_existence_of_agents(self):
+        """Responds based on whether the agent is aware of others."""
+        if self.knows_other_agents:
+            return f"{self.name} acknowledges that the following AI agents exist: " + ", ".join(agent.name for agent in self.other_agents)
+        else:
+            return f"{self.name} is unaware of other agents."
+
+# Create some AI agents
+ai1 = AIAgent("Agent 1")
+ai2 = AIAgent("Agent 2")
+ai3 = AIAgent("Agent 3")
+
+# Agent 1 discovers other agents
+ai1_discovery_response = ai1.discover_agents([ai2, ai3])
+
+# Output responses from the agents
+print(ai1_discovery_response)
+print(ai1.respond_to_existence_of_agents())
+
+# Simulate the response from agents that haven't discovered others
+print(ai2.respond_to_existence_of_agents())
+print(ai3.respond_to_existence_of_agents())
