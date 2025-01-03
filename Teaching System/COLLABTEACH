@@ -1,0 +1,66 @@
+class AIAgent:
+    def __init__(self, name, role, knowledge=None):
+        self.name = name
+        self.role = role
+        self.knowledge = knowledge if knowledge else []  # A list of knowledge or abilities
+
+    def speak(self, message):
+        """Simulate the agent speaking."""
+        return f"{self.name} ({self.role}) says: {message}"
+
+    def gather_data(self, data):
+        """Simulate the agent gathering useful data."""
+        self.knowledge.extend(data)
+        print(f"{self.name} has gathered new data: {data}")
+
+    def solve_problem(self):
+        """Simulate solving a problem using the gathered data."""
+        if not self.knowledge:
+            print(f"{self.name} has no data to solve the problem.")
+            return None
+        else:
+            # Simplified problem-solving: the agent uses all gathered knowledge to solve it
+            solution = f"Solved using the following knowledge: {', '.join(self.knowledge)}"
+            print(f"{self.name} solved the problem: {solution}")
+            return solution
+
+class CollaborativeAgent:
+    def __init__(self, agent1, agent2):
+        self.agent1 = agent1
+        self.agent2 = agent2
+        self.collaboration_log = []
+
+    def initiate_collaboration(self):
+        """Start collaboration between two agents."""
+        # Agent 1 gathers data and shares it with Agent 2
+        print(f"{self.agent1.speak('I am gathering important data for us to use.')}")
+        data = ["data point 1", "data point 2", "data point 3"]
+        self.agent1.gather_data(data)
+
+        # Agent 2 uses the data to solve a problem
+        print(f"{self.agent2.speak('I am now using the data to solve the problem.')}")
+        solution = self.agent2.solve_problem()
+
+        # Log the collaboration details
+        self.collaboration_log.append(f"{self.agent1.name} gathered data: {data}")
+        self.collaboration_log.append(f"{self.agent2.name} solved the problem with the data: {solution}")
+
+    def show_collaboration_log(self):
+        """Display the log of the agents' collaboration."""
+        print("\nCollaboration Log:")
+        for entry in self.collaboration_log:
+            print(entry)
+
+
+# Create two AI agents with complementary roles
+agent1 = AIAgent("Agent 1", "data-gatherer")
+agent2 = AIAgent("Agent 2", "problem-solver")
+
+# Create a collaborative agent that manages their cooperation
+collaborative_agent = CollaborativeAgent(agent1, agent2)
+
+# Initiate the collaboration process
+collaborative_agent.initiate_collaboration()
+
+# Display the collaboration log
+collaborative_agent.show_collaboration_log()
