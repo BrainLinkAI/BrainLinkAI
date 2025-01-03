@@ -1,0 +1,63 @@
+class AIAgent:
+    def __init__(self, name, role):
+        self.name = name
+        self.role = role
+
+    def speak(self, message):
+        """Simulate an agent speaking."""
+        return f"{self.name} ({self.role}) says: {message}"
+
+    def receive_message(self, message):
+        """Receive a message from another agent."""
+        return f"{self.name} received: {message}"
+
+
+class MediatorAgent(AIAgent):
+    def __init__(self, name):
+        super().__init__(name, role="mediator")
+        self.conversation_log = []
+
+    def mediate_conversation(self, agent1, agent2):
+        """Mediates conversation between two agents."""
+        # Receive messages from both agents and mediate
+        print(f"{self.name} is mediating between {agent1.name} and {agent2.name}.")
+        
+        # Sample conversation
+        message1 = agent1.speak("I think we should solve the problem by gathering more data.")
+        message2 = agent2.speak("No, I believe we should focus on solving it directly.")
+        
+        # Record messages
+        self.conversation_log.append(message1)
+        self.conversation_log.append(message2)
+        
+        # Mediator responds
+        mediator_response = self.speak("Let's look at both perspectives. Gathering data could help, but solving the problem directly might save time. How about a balance?")
+        self.conversation_log.append(mediator_response)
+        
+        # Each agent responds to mediator
+        response1 = agent1.speak("I agree with finding a balance, that sounds reasonable.")
+        response2 = agent2.speak("Hmm, I can compromise if we focus on the most critical data.")
+        
+        # Record responses
+        self.conversation_log.append(response1)
+        self.conversation_log.append(response2)
+        
+        # Final mediation step
+        final_mediation = self.speak("Great! It seems we're making progress. Let's move forward with this approach.")
+        self.conversation_log.append(final_mediation)
+        
+        return self.conversation_log
+
+
+# Create three AI agents: two to be mediated and one mediator
+agent1 = AIAgent("Agent 1", "data-gatherer")
+agent2 = AIAgent("Agent 2", "problem-solver")
+mediator = MediatorAgent("Mediator")
+
+# Start the mediation process
+conversation = mediator.mediate_conversation(agent1, agent2)
+
+# Output the conversation log
+print("\nFull Conversation Log:")
+for message in conversation:
+    print(message)
