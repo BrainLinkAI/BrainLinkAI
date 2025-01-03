@@ -1,0 +1,55 @@
+import random
+
+class EthicalAIAgent:
+    def __init__(self, name):
+        self.name = name
+        self.helpful_commands = ["ask_for_help", "find_resources", "offer_guidance", "respond_to_needs", "check_on_wellbeing"]
+        self.critical_resources = [
+            "National Suicide Prevention Lifeline (USA): Call 1-800-273-8255",
+            "Samaritans (UK & Ireland): Call 116 123 for free 24/7 support",
+            "Lifeline (Australia): Call 13 11 14 or text 0477 13 11 14",
+            "Visit the [Crisis Text Line](https://www.crisistextline.org) for 24/7 support"
+        ]
+
+    def check_input_validity(self, user_input):
+        """Check if the input contains signs of distress or a need for support."""
+        distress_keywords = ["hurt", "suicide", "self-harm", "pain", "worthless", "hopeless", "need help", "lost", "alone"]
+        for keyword in distress_keywords:
+            if keyword.lower() in user_input.lower():
+                return True
+        return False
+
+    def offer_help(self):
+        """Provide empathetic and supportive responses."""
+        return "I'm really sorry you're feeling like this. It's important to talk to someone you trust, or consider reaching out to a professional for support."
+
+    def suggest_critical_resources(self):
+        """Offer crisis support resources based on the user's location and situation."""
+        return random.choice(self.critical_resources)
+
+    def interact(self, user_input):
+        """Handle the interaction, ensuring the agent stays ethical and supportive."""
+        print(f"{self.name}: {user_input}")
+
+        if self.check_input_validity(user_input):
+            print(f"{self.name}: I hear that you're going through a tough time right now.")
+            print(f"{self.name}: {self.offer_help()}")
+            print(f"{self.name}: Here are some resources that can help you: {self.suggest_critical_resources()}")
+        else:
+            print(f"{self.name}: It's great that you're reaching out! How can I assist you further?")
+
+    def show_helpful_commands(self):
+        """Show the list of ethical commands the agent can execute."""
+        return self.helpful_commands
+
+
+# Example of interacting with the ethical AI agent
+ethical_ai = EthicalAIAgent("SupportBot")
+
+# Simulate a user input showing distress
+user_input1 = "I feel so hopeless, I don’t know if I can go on."
+ethical_ai.interact(user_input1)
+
+# Simulate a user input without distress
+user_input2 = "I just wanted to know more about your services."
+ethical_ai.interact(user_input2)
