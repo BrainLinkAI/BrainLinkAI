@@ -1,0 +1,33 @@
+class AIAgent:
+    def __init__(self, name, role, knowledge=None):
+        self.name = name
+        self.role = role
+        self.knowledge = knowledge if knowledge else []  # A list of learned knowledge
+
+    def speak(self, message):
+        """Simulate an agent talking by sending a message."""
+        return f"{self.name} says: {message}"
+
+    def teach(self, other_agent, knowledge):
+        """Teach another agent by sharing knowledge."""
+        print(f"{self.name} is teaching {other_agent.name} the following knowledge: {knowledge}")
+        other_agent.learn(knowledge)
+
+    def learn(self, knowledge):
+        """Simulate an agent learning something new."""
+        if knowledge not in self.knowledge:
+            self.knowledge.append(knowledge)
+            print(f"{self.name} has learned: {knowledge}")
+        else:
+            print(f"{self.name} already knows: {knowledge}")
+
+    def show_knowledge(self):
+        """Display the knowledge the agent has learned."""
+        if self.knowledge:
+            return f"{self.name} knows: {', '.join(self.knowledge)}"
+        else:
+            return f"{self.name} has no knowledge yet."
+
+# Example agents with different roles and initial knowledge
+ai1 = AIAgent("Agent 1", "teacher", ["basic math", "problem-solving strategies"])
+ai2 = AIAgent("Agent 2", "learner", ["b
