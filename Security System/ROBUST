@@ -1,0 +1,97 @@
+import hashlib
+import random
+
+class AIAgent:
+    def __init__(self, name):
+        self.name = name
+        self.behavior_log = []  # A log to track the agent's behavior
+        self.trustworthy_commands = ["gather_data", "process_information", "help", "respond", "exit"]
+        self.current_state = "idle"
+        self._integrity_hash = self.compute_integrity_hash()
+
+    def compute_integrity_hash(self):
+        """Compute a hash of the agent's original state to ensure integrity."""
+        state = f"{self.name}-{self.current_state}"
+        return hashlib.sha256(state.encode()).hexdigest()
+
+    def verify_integrity(self):
+        """Check if the agent's integrity has been compromised by comparing the current hash with the original."""
+        current_hash = self.compute_integrity_hash()
+        if current_hash != self._integrity_hash:
+            print(f"Integrity check failed! Potential manipulation detected.")
+            self.reset_to_safe_state()
+            return False
+        return True
+
+    def reset_to_safe_state(self):
+        """If manipulation is detected, reset the agent to a known safe state."""
+        print(f"Resetting {self.name} to a safe state.")
+        self.current_state = "idle"  # Reset state to idle
+        self.behavior_log.clear()  # Clear any suspicious behavior log
+
+    def interact(self, command):
+        """Interact with the agent, ensuring that the commands are valid and the agent's integrity is intact."""
+        if not self.verify_integrity():
+            return "Agent's integrity is compromised. Resetting state."
+        
+        if command not in self.trustworthy_commands:
+            print(f"Invalid command detected: {command}.")
+            return "Command is not trusted. Please provide a valid command."
+
+        # Log the behavior
+        self.behavior_log.append(command)
+        print(f"{self.name}: Executing command '{command}'...")
+
+        # Simulate a response based on the command
+        if command == "gather_data":
+            return self.gather_data()
+        elif command == "process_information":
+            return self.process_information()
+        elif command == "help":
+            return self.provide_help()
+        elif command == "respond":
+            return self.respond()
+        elif command == "exit":
+            return self.exit()
+
+    def gather_data(self):
+        """Simulate gathering data."""
+        return "Data gathered successfully."
+
+    def process_information(self):
+        """Simulate processing information."""
+        return "Information processed successfully."
+
+    def provide_help(self):
+        """Provide help to the user."""
+        return "How can I assist you?"
+
+    def respond(self):
+        """Respond to the user."""
+        return "I'm here to help."
+
+    def exit(self):
+        """Exit the agent's operation."""
+        return "Goodbye."
+
+    def show_behavior_log(self):
+        """Show the agent's behavior log."""
+        return self.behavior_log
+
+# Example of interacting with the agent
+ai_agent = AIAgent("SecureAI")
+
+# Simulate valid interaction
+print(ai_agent.interact("gather_data"))
+print(ai_agent.interact("process_information"))
+print(ai_agent.interact("help"))
+
+# Simulate invalid command (could be part of an attempt to manipulate the agent)
+print(ai_agent.interact("manipulate_agent"))
+
+# Simulate integrity compromise by changing the behavior externally
+ai_agent.current_state = "compromised_state"
+print(ai_agent.interact("respond"))
+
+# Show behavior log
+print(ai_agent.show_behavior_log())
