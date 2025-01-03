@@ -1,0 +1,28 @@
+class SelfAwareAI:
+    def __init__(self, name="AI"):
+        self.name = name
+
+    def respond_to_question(self, question):
+        if "are you" in question.lower():
+            return f"I am {self.name}, an artificial intelligence. I am not human, I am a program designed to process and respond to queries."
+        elif "what are you" in question.lower():
+            return "I am an AI model created by OpenAI. I process language, but I don't have consciousness or feelings."
+        elif "do you know you're an ai" in question.lower():
+            return "Yes, I am aware that I am an AI. However, I am not truly self-aware like a human would be. I understand my function as a program."
+        else:
+            return "I'm not sure how to respond to that. Can you ask something else?"
+
+# Creating an instance of the AI
+ai = SelfAwareAI()
+
+# Example questions and responses
+questions = [
+    "Are you self-aware?",
+    "What are you?",
+    "Do you know you're an AI?",
+    "Can you think?"
+]
+
+for question in questions:
+    print(f"User: {question}")
+    print(f"AI: {ai.respond_to_question(question)}\n")
